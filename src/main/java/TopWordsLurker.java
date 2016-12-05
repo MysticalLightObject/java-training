@@ -20,16 +20,9 @@ public class TopWordsLurker {
     private void readContents(Path path) {
         try (BufferedReader reader = Files.newBufferedReader(path, charset);
                 Scanner scanner = new Scanner(reader)) {
-            ArrayList<String> wordsList = new ArrayList<>();
             HashMap<String, Integer> wordsListWithAmount = new HashMap<>();
-
-            while (scanner.hasNext()) {
-                wordsList.add(scanner.next());
-            }
-
-            TopWordsLurker.fillHashMap(wordsList, wordsListWithAmount);
+            TopWordsLurker.fillHashMap(scanner, wordsListWithAmount);
             System.out.println(wordsListWithAmount);
-
         } catch (NoSuchFileException x) {
             System.out.println("File with path \"" + path.toString() + "\" not found!");
         } catch (IOException x) {
@@ -47,9 +40,11 @@ public class TopWordsLurker {
         return c.readLine("Please, enter the file path(relative or absolute)\n");
     }
 
-    private static HashMap<String, Integer> fillHashMap(ArrayList<String> arrayFrom, HashMap<String, Integer> mapTo) {
+    private static HashMap<String, Integer> fillHashMap(Scanner scanner, HashMap<String, Integer> mapTo) {
         Integer amount;
-        for (String word : arrayFrom) {
+
+        while (scanner.hasNext()) {
+            String word = scanner.next();
             if (mapTo.containsKey(word)) {
                 amount = mapTo.get(word) + 1;
                 mapTo.put(word, amount);
