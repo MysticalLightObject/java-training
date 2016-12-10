@@ -30,7 +30,7 @@ public class FileContentReader {
 
         while (scanner.hasNext()) {
             String word = scanner.next();
-            String normalizedWord = trim(word);
+            String normalizedWord = normalize(word);
             if (mapTo.containsKey(normalizedWord)) {
                 amount = mapTo.get(normalizedWord) + 1;
                 mapTo.put(normalizedWord, amount);
@@ -41,7 +41,7 @@ public class FileContentReader {
         return mapTo;
     }
 
-    private static String trim(String wordToTrim) {
+    private static String normalize(String wordToTrim) {
         return wordToTrim.replaceAll("[^a-zA-Z0-9’]+", "").toLowerCase();
     }
 }
