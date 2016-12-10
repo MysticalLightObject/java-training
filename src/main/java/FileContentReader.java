@@ -19,7 +19,7 @@ public class FileContentReader {
         } catch (NoSuchFileException x) {
             System.out.println("File with path \"" + path.toString() + "\" not found!");
         } catch (IOException x) {
-            System.out.println("Unknown error occured");
+            System.out.println("Unknown error has occurred");
             System.err.println(x.toString());
         }
         return null;
@@ -30,13 +30,18 @@ public class FileContentReader {
 
         while (scanner.hasNext()) {
             String word = scanner.next();
-            if (mapTo.containsKey(word)) {
-                amount = mapTo.get(word) + 1;
-                mapTo.put(word, amount);
+            String normalizedWord = trim(word);
+            if (mapTo.containsKey(normalizedWord)) {
+                amount = mapTo.get(normalizedWord) + 1;
+                mapTo.put(normalizedWord, amount);
             }
             else
-                mapTo.put(word, 1);
+                mapTo.put(normalizedWord, 1);
         }
         return mapTo;
+    }
+
+    private static String trim(String wordToTrim) {
+        return wordToTrim.replaceAll("[^a-zA-Z0-9’]+", "").toLowerCase();
     }
 }

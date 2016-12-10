@@ -1,16 +1,15 @@
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.NavigableMap;
 
 public class TopWordsLurker {
 
     public static void main(String[] args) {
-        Path path = ConsoleInputReader.readPath();
-        HashMap<String, Integer> wordsWithAmounts = FileContentReader.readContents(path);
-
-        //todo: 1) switch key-value to value-key for every entry of the map and put it into the TreeMap structure
-        //todo: 2) trim redundant chars and symbols around the words
-        //todo: 3) normalize the words to the lowercase
-        System.out.println(wordsWithAmounts);
+        Path path = ConsoleUtils.readPath();
+        HashMap<String, Integer> wordsWithAmountsMap = FileContentReader.readContents(path);
+        NavigableMap<Integer, ArrayList<String>> sortedWordMap = SortUtils.getSortedWordMap(wordsWithAmountsMap);
+        ConsoleUtils.outputTopWords(sortedWordMap);
     }
 
 
